@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+
+#  docker run -p 8089:8080 -e ADMINER_DEFAULT_SERVER=db adminer
+    web:
+        build:
+            context: ./web
+            dockerfile: Dockerfile.yml
+        
+        environment:
+            - APACHE_RUN_USER=#1000
+            # - APACHE_RUN_USER=www-data
+        volumes:
+            - ${APP_PATH_HOST}:${APP_PTH_CONTAINER}
+            # :${PUBLIC_DIRECTORY}
+        ports:
+            - 8085:80
+        working_dir: ${APP_PTH_CONTAINER}
+
+
+    db:
+        image: mysql:5.5.62
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: 1
+        volumes:
+            - ${DB_PATH_HOST}:/var/lib/mysql
+
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8086:8080
+        links:
+            - db
+
+
+    composer:
+        image: composer:1.6
+        volumes:
+            - ${APP_PATH_HOST}:${APP_PTH_CONTAINER}
+        working_dir: ${APP_PTH_CONTAINER}
+        command: composer install --ignore-platform-reqs
