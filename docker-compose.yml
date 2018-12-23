@@ -12,7 +12,7 @@ services:
             - APACHE_RUN_USER=#1000
             # - APACHE_RUN_USER=www-data
         volumes:
-            - ${APP_PATH_HOST}:${APP_PTH_CONTAINER}public
+            - ${APP_PATH_HOST}:${APP_PTH_CONTAINER}
             # :${PUBLIC_DIRECTORY}
         ports:
             - 8085:80
