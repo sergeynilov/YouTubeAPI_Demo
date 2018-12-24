@@ -15,6 +15,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *               new Line # 3 ew
      * new 1 testing
      * new 2 testing
+     * new 33 testing
 	 * @var string
 	 */
 	protected $table = 'users';
